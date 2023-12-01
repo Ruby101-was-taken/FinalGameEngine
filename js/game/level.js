@@ -13,6 +13,8 @@ class Level extends Game {
   constructor(canvasId) {
     // Call the constructor of the superclass (Game) with the canvas ID
     super(canvasId);
+
+    this.test = 900;
     
     // Create a player object and add it to the game
     const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
@@ -35,6 +37,8 @@ class Level extends Game {
       new Platform(2 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
       new Platform(3 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
       new Platform(4 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
+      new Platform(4 * (platformWidth + gap)+50, this.canvas.height - 80, platformWidth, 50),
+      new Platform(4 * (platformWidth + gap)+50, this.canvas.height - 300, platformWidth, 50),
     ];
     for (const platform of platforms) {
       this.addGameObject(platform);

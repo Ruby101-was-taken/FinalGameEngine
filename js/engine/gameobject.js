@@ -43,6 +43,10 @@ class GameObject {
       // Find the first component that is an instance of componentClass.
       return this.components.find((component) => component instanceof componentClass);
     }
+
+    hasComponent(componentClass){ 
+      return this.getComponent(componentClass) != undefined; //return whether a game object holds a specific component 
+    }
   }
   
   // The GameObject class is exported as the default export of this module.

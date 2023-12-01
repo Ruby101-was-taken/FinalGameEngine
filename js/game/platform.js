@@ -19,7 +19,7 @@ class Platform extends GameObject {
     
     // Add a Physics component to this platform, with initial velocity, acceleration, and forces set to zero.
     // Since platforms don't move, these values will remain zero throughout the game
-    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }));
+    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, true));
     
     // Set the tag property to 'platform'. This can be used to identify platforms later in the game logic
     this.tag = 'platform'; 

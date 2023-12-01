@@ -32,7 +32,7 @@ class Enemy extends GameObject {
     
     // Initialize variables related to enemy's movement
     this.movementDistance = 0;
-    this.movementLimit = 100;
+    this.movementLimit = 2;
     this.movingRight = true;
   }
 
@@ -46,7 +46,7 @@ class Enemy extends GameObject {
     if (this.movingRight) {
       // If it hasn't reached its movement limit, make it move right
       if (this.movementDistance < this.movementLimit) {
-        physics.velocity.x = 50;
+        physics.velocity.x = 1;
         this.movementDistance += Math.abs(physics.velocity.x) * deltaTime;
         this.getComponent(Renderer).gameObject.direction = 1;
       } else {
@@ -57,7 +57,7 @@ class Enemy extends GameObject {
     } else {
       // If it hasn't reached its movement limit, make it move left
       if (this.movementDistance < this.movementLimit) {
-        physics.velocity.x = -50;
+        physics.velocity.x = -1;
         this.movementDistance += Math.abs(physics.velocity.x) * deltaTime;
         this.getComponent(Renderer).gameObject.direction = -1;
       } else {
@@ -73,18 +73,6 @@ class Enemy extends GameObject {
       player.collidedWithEnemy();
     }
 
-    // Check if the enemy is colliding with any platforms
-    const platforms = this.game.gameObjects.filter(obj => obj instanceof Platform);
-    this.isOnPlatform = false;
-    for (const platform of platforms) {
-      if (physics.isColliding(platform.getComponent(Physics))) {
-        // If it is, stop its vertical movement and position it on top of the platform
-        physics.velocity.y = 0;
-        physics.acceleration.y = 0;
-        this.y = platform.y - this.getComponent(Renderer).height;
-        this.isOnPlatform = true;
-      }
-    }
 
     // Call the update method of the superclass (GameObject), passing along deltaTime
     super.update(deltaTime);

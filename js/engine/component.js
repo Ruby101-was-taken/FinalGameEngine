@@ -18,6 +18,11 @@ class Component {
     // Like the update method, this is also empty and likely intended to be overridden by subclasses to include custom behavior.
     draw(ctx) {
     }
+
+    
+  equals(other){
+    return this==other;
+  }
   }
   
   // The Component class is exported as the default export of this module, allowing it to be imported in other modules.
