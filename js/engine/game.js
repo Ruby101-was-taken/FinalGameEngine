@@ -1,6 +1,7 @@
 // This class depends on the Camera, which is a separate module and needs to be imported.
 import Camera from './camera.js';
 
+
 // The Game class is responsible for setting up and managing the main game loop.
 class Game {
   // The constructor initializes a new instance of the Game class.
@@ -50,6 +51,7 @@ class Game {
     // Draw the game objects on the canvas.
     this.draw();
 
+
     // Request the next animation frame, which will call this method again.
     requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
   }
@@ -70,6 +72,7 @@ class Game {
   draw() {
     // Clear the entire canvas.
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
 
     // Save the current state of the canvas and the context.
     this.ctx.save();

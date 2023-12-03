@@ -40,7 +40,7 @@ class Enemy extends GameObject {
   // which represents the time passed since the last frame
   update(deltaTime) {
     // Get the Physics component of this enemy
-    const physics = this.getComponent(Physics);
+    const physics = this.getComponent(Physics); 
 
     // Check if the enemy is moving to the right
     if (this.movingRight) {
@@ -73,6 +73,9 @@ class Enemy extends GameObject {
       player.collidedWithEnemy();
     }
 
+    if(this.y > 1000){
+      this.game.removeGameObject(this);
+    }
 
     // Call the update method of the superclass (GameObject), passing along deltaTime
     super.update(deltaTime);

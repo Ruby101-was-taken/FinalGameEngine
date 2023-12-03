@@ -14,8 +14,6 @@ class Level extends Game {
     // Call the constructor of the superclass (Game) with the canvas ID
     super(canvasId);
 
-    this.test = 900;
-    
     // Create a player object and add it to the game
     const player = new Player(this.canvas.width / 2 - 25, this.canvas.height / 2 - 25);
     this.addGameObject(player);
@@ -34,22 +32,24 @@ class Level extends Game {
     const platforms = [
       new Platform(0, this.canvas.height - 20, platformWidth, 20),
       new Platform(platformWidth + gap, this.canvas.height - 20, platformWidth, 20),
-      new Platform(2 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
-      new Platform(3 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
-      new Platform(4 * (platformWidth + gap), this.canvas.height - 20, platformWidth, 20),
+      new Platform(2 * (platformWidth + gap), this.canvas.height - 20, platformWidth+gap, 20),
+      new Platform(3 * (platformWidth + gap), this.canvas.height - 20, platformWidth+gap, 20),
+      new Platform(4 * (platformWidth + gap), this.canvas.height - 20, platformWidth+200, 20),
       new Platform(4 * (platformWidth + gap)+50, this.canvas.height - 80, platformWidth, 50),
       new Platform(4 * (platformWidth + gap)+50, this.canvas.height - 300, platformWidth, 50),
+      new Platform(5 * (platformWidth + gap)+50, this.canvas.height - 120, platformWidth, 50),
+      new Platform(5 * (platformWidth + gap)+50, this.canvas.height - 120, 4000, 50),
     ];
     for (const platform of platforms) {
       this.addGameObject(platform);
     }
 
-    // Create enemies and add them to the game
-    this.addGameObject(new Enemy(50, this.canvas.height - 90));
-    this.addGameObject(new Enemy(platformWidth + gap + 50, this.canvas.height - 90));
-    this.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, this.canvas.height - 90));
+    // // Create enemies and add them to the game
+    // this.addGameObject(new Enemy(50, this.canvas.height - 90));
+    // this.addGameObject(new Enemy(platformWidth + gap + 50, this.canvas.height - 90));
+    // this.addGameObject(new Enemy(2 * (platformWidth + gap) + 50, this.canvas.height - 90));
 
-    // Create collectibles and add them to the game
+    // // Create collectibles and add them to the game
     this.addGameObject(new Collectible(250, this.canvas.height - 100, 20, 20));
     this.addGameObject(new Collectible(450, this.canvas.height - 100, 20, 20));
     this.addGameObject(new Collectible(650, this.canvas.height - 100, 20, 20));

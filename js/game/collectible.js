@@ -26,7 +26,7 @@ class Collectible extends GameObject {
     // Add a new Physics component to this collectible. The physics component is responsible for handling the physics
     // (like movement, collision detection, etc.). In this case, the collectible doesn't move,
     // so the initial velocity, acceleration, and friction are all set to zero.
-    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }));
+    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 }, {x: 0, y:0}));
 
     // Set the 'tag' property of this collectible. The tag is used to identify the type of GameObject
     // (useful when checking collisions, for example)

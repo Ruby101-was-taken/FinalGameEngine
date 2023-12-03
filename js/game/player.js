@@ -16,8 +16,8 @@ class Player extends GameObject {
     super(x, y); // Call parent's constructor
     this.renderer = new Renderer('blue', 50, 50, Images.player); // Add renderer
     this.addComponent(this.renderer);
-    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 })); // Add physics
-    this.getComponent(Physics).setBoundingSize(35, 50)
+    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, {x: 6, y:0})); // Add physics
+    this.getComponent(Physics).setBoundingSize(20, 50)
     this.addComponent(new Input()); // Add input for handling user input
     // Initialize all the player specific properties
     this.direction = 1;
@@ -31,6 +31,14 @@ class Player extends GameObject {
     this.isInvulnerable = false;
     this.isGamepadMovement = false;
     this.isGamepadJump = false;
+
+
+    this.dashSpeed = 20;
+
+    this.jumpHeld = false;
+    this.jumpHeldCounter = 0;
+
+    this.cTime = 0;
   }
 
   // The update function runs every frame and contains game logic
@@ -39,22 +47,42 @@ class Player extends GameObject {
     const physics = this.getComponent(Physics); // Get physics component
     const input = this.getComponent(Input); // Get input component
 
+
     this.handleGamepadInput(input);
     
     // Handle player movement
-    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight')) {
-      physics.velocity.x = 10;
+    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight') && physics.velocity.x<10) {
+      physics.acceleration.x = 15;
       this.direction = -1;
-    } else if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft')) {
-      physics.velocity.x = -10;
+    } if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft') && physics.velocity.x>-10) {
+      physics.acceleration.x = -15;
       this.direction = 1;
-    } else if (!this.isGamepadMovement) {
-      physics.velocity.x = 0;
+    } 
+    
+    // if (input.isKeyDown('ControlLeft')) {
+    //   physics.velocity.x -= this.dashSpeed*this.direction;
+    // } 
+
+    //coyote time implememntation
+    if(physics.isGrounded){
+      this.cTime = 0.35;
+    }
+    else if(this.cTime > 0){
+      this.cTime-=deltaTime*2;
+    }
+    else if(this.cTime <0){
+      this.cTime = 0;
+    }
+
+
+    if(this.jumpHeld){
+      this.jumpHeld = input.isKeyDown("Space");
     }
 
     // Handle player jumping
-    if (!this.isGamepadJump && input.isKeyDown('ArrowUp')) {
+    if (!this.isGamepadJump && input.isKeyDown('Space') && !this.jumpHeld) {
       this.startJump();
+      this.jumpHeld = true;
     }
 
     if (this.isJumping) {
@@ -77,16 +105,16 @@ class Player extends GameObject {
       this.resetPlayerState();
     }
 
-    // Check if player has no lives left
-    if (this.lives <= 0) {
-      location.reload();
-    }
+    // // Check if player has no lives left
+    // if (this.lives <= 0) {
+    //   location.reload();
+    // }
 
     // Check if player has collected all collectibles
-    if (this.score >= 3) {
-      console.log('You win!');
-      location.reload();
-    }
+    // if (this.score >= 3) {
+    //   console.log('You win!');
+
+    // }
 
     super.update(deltaTime);
   }
@@ -128,11 +156,12 @@ class Player extends GameObject {
 
   startJump() {
     // Initiate a jump if the player is on a platfor
-    if (this.getComponent(Physics).isGrounded) { 
+    if (this.getComponent(Physics).isGrounded || this.cTime>0) { 
       this.isJumping = true;
       this.jumpTimer = this.jumpTime;
       this.getComponent(Physics).velocity.y = -this.jumpForce;
       this.isOnPlatform = false;
+      this.cTime = 0;
     }
   }
   
