@@ -50,18 +50,14 @@ class Physics extends Component {
     }
     for(let i=0; i<Math.abs(this.velocity.x); i++){
       this.gameObject.x+=Math.sign(this.velocity.x);
-      this.gameObject.y--;
+      //this.gameObject.y--;
       for(const obj of solidObjs){
-        if(obj.getComponent(Physics).isColliding(this)){
-          this.gameObject.y+=2;
            if(obj.getComponent(Physics).isColliding(this)){
             this.gameObject.x-=Math.sign(this.velocity.x);
             this.velocity.x = 0;
            }
-           this.gameObject.y-=2;
         }
-      }
-      this.gameObject.y++;
+      //this.gameObject.y++;
     }
 
 

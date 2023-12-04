@@ -3,24 +3,36 @@ import GameObject from '../engine/gameobject.js';
 import Renderer from '../engine/renderer.js';
 import Physics from '../engine/physics.js';
 import Input from '../engine/input.js';
-import { Images } from '../engine/resources.js';
 import Enemy from './enemy.js';
 import Platform from './platform.js';
 import Collectible from './collectible.js';
 import ParticleSystem from '../engine/particleSystem.js';
+import GameAnimationHandler from '../engine/animationHandler.js';
+import { PlayerImages } from '../engine/resources.js';
+import GameAnimation from '../engine/animation.js';
+
+
+
 
 // Defining a class Player that extends GameObject
 class Player extends GameObject {
   // Constructor initializes the game object and add necessary components
   constructor(x, y) {
     super(x, y); // Call parent's constructor
-    this.renderer = new Renderer('blue', 50, 50, Images.player); // Add renderer
+    this.renderer = new Renderer('blue', 50, 50, PlayerImages.idle); // Add renderer
     this.addComponent(this.renderer);
-    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, {x: 6, y:0})); // Add physics
+    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, {x: 9, y:0})); // Add physics
     this.getComponent(Physics).setBoundingSize(20, 50)
     this.addComponent(new Input()); // Add input for handling user input
+
+    this.addComponent(new GameAnimationHandler(PlayerImages.idle));
+    this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.walk1, PlayerImages.walk3, PlayerImages.walk2,PlayerImages.walk3]));
+    this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.skid]));
+    this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.jump]));
+    this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.fall]));
+    
     // Initialize all the player specific properties
-    this.direction = 1;
+    this.direction = -1;
     this.lives = 3;
     this.score = 0;
     this.isOnPlatform = false;
@@ -43,21 +55,25 @@ class Player extends GameObject {
 
   // The update function runs every frame and contains game logic
   update(deltaTime) {
-
     const physics = this.getComponent(Physics); // Get physics component
     const input = this.getComponent(Input); // Get input component
 
 
+    console.log(this.x, this.y);
+
+    
+
     this.handleGamepadInput(input);
     
     // Handle player movement
-    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight') && physics.velocity.x<10) {
+    if (!this.isGamepadMovement && input.isKeyDown('ArrowRight') && physics.velocity.x<5 && !input.isKeyDown('ArrowLeft')) {
       physics.acceleration.x = 15;
       this.direction = -1;
-    } if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft') && physics.velocity.x>-10) {
+    } if (!this.isGamepadMovement && input.isKeyDown('ArrowLeft') && physics.velocity.x>-5 && !input.isKeyDown('ArrowRight')) {
       physics.acceleration.x = -15;
       this.direction = 1;
-    } 
+    }  
+
     
     // if (input.isKeyDown('ControlLeft')) {
     //   physics.velocity.x -= this.dashSpeed*this.direction;
@@ -101,7 +117,7 @@ class Player extends GameObject {
   
   
     // Check if player has fallen off the bottom of the screen
-    if (this.y > this.game.canvas.height) {
+    if (this.y > 0) {
       this.resetPlayerState();
     }
 
@@ -115,6 +131,27 @@ class Player extends GameObject {
     //   console.log('You win!');
 
     // }
+
+    const anim = this.getComponent(GameAnimationHandler)
+    if(physics.velocity.y==0){
+      if(physics.velocity.x != 0 && Math.sign(physics.velocity.x)!=this.direction){
+        anim.currentAnimation = 1;
+        anim.bonusNum = Math.abs(physics.velocity.x)/25;
+      }
+      else if(physics.velocity.x != 0 && Math.sign(physics.velocity.x)==this.direction){
+        anim.currentAnimation = 2;
+      }
+      else{
+        anim.currentAnimation = 0;
+        anim.bonusNum = 0;
+      }
+    }
+    else if(physics.velocity.y<0){
+      anim.currentAnimation = 3;
+    }
+    else if(physics.velocity.y>0){
+      anim.currentAnimation = 4;
+    }
 
     super.update(deltaTime);
   }
@@ -200,11 +237,11 @@ class Player extends GameObject {
 
   resetPlayerState() {
     // Reset the player's state, repositioning it and nullifying movement
-    this.x = this.game.canvas.width / 2;
-    this.y = this.game.canvas.height / 2;
+    this.x = 0 ;
+    this.y = -70;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };
     this.getComponent(Physics).acceleration = { x: 0, y: 0 };
-    this.direction = 1;
+    this.direction = -1;
     this.isOnPlatform = false;
     this.isJumping = false;
     this.jumpTimer = 0;
