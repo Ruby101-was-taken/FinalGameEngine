@@ -30,11 +30,11 @@ class Level extends Game {
 
     // Create platforms and add them to the game
     const platforms = [
-      new Platform(-5000 , -500, 5000, 520),
+      new Platform(-5000, -500, 5000, 520),
       new Platform(0, 0, 900, 20),
       new Platform(0, -150, 700, 20),
       new Platform(800, -40, 100, 60),
-      new Platform(900, -300, 100, 320),
+      new Platform(900, -300, 515, 319),
     ];
     for (const platform of platforms) {
       this.addGameObject(platform);
