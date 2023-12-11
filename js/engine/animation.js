@@ -1,4 +1,3 @@
-
 class GameAnimation{
     constructor(frames, speed = 5){
         this.frames = frames;

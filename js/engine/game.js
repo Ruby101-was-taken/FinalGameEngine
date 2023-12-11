@@ -73,7 +73,7 @@ class Game {
     // Clear the entire canvas.
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-
+    this.ctx.imageSmoothingEnabled = false; // referenced from https://stackoverflow.com/questions/31910043/html5-canvas-drawimage-draws-image-blurry 11/12/2023
     // Save the current state of the canvas and the context.
     this.ctx.save();
     // Translate the canvas by the negative of the camera's position. This makes the camera follow its target.

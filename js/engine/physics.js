@@ -35,15 +35,29 @@ class Physics extends Component {
       this.gameObject.y+=Math.sign(this.velocity.y);
       for(const obj of solidObjs){
         if(obj.getComponent(Physics).isColliding(this)){
-          if(this.velocity.y<0){
-            this.gameObject.y+=1;
-            this.velocity.y=0; 
-            this.velocity.y=+1; 
-          } 
-          else if(this.velocity.y>=0){
-            this.gameObject.y-=1;
-            this.isGrounded = true;
-            this.velocity.y=0;
+          if(this.gravity.y>=0){
+            if(this.velocity.y<0){
+              this.gameObject.y+=1;
+              this.velocity.y=0; 
+              this.velocity.y=+1; 
+            } 
+            else if(this.velocity.y>=0){
+              this.gameObject.y-=1;
+              this.isGrounded = true;
+              this.velocity.y=0;
+            }
+          }
+          else if(this.gravity.y<0){
+            if(this.velocity.y>0){
+              this.gameObject.y-=1;
+              this.velocity.y=0; 
+              this.velocity.y=-1; 
+            } 
+            else if(this.velocity.y<=0){
+              this.gameObject.y+=1;
+              this.isGrounded = true;
+              this.velocity.y=0;
+            }
           }
         }
       }
