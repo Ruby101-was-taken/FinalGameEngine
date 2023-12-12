@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title id="title">How To Use The Editor</title>
+		<link rel="stylesheet" href="style.css">
+        <link rel="icon" href="../icon.ico" type="image/x-icon">
+	</head>
+	<body>
+		
+		<div class="container">
+			<h1 id="Title" class="TopicHeadText">How to use Ruby's Level Editor</h1>
+		</div>
+		<div class="container">
+			<div class="mainContentTopLeft">
+                <h1 id="Title" class="TopicHeadText">Setup</h1>
+				<p class="wikiText">NOTE: The Level Editor can take a long time to load on occasion, if this happens, try unplugging any usb keyboards or input devices</p>
+				<p class="wikiText">If a file named "level.csv" does not exist yet create it. Copy any platforms from "level.js" (Located in the "game" folder), and move them into the csv, which each platform being on a new line. Below you can see the correct formatting. Incorrect formatting can lead to the program not reading the info correctly!</p>
+                <pre class="wikiText">
+                    new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">-460.0</span>, <span style="color:blue;">689.0</span>, <span style="color:blue;">367.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">0.0</span>, <span style="color:blue;">900.0</span>, <span style="color:blue;">500.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">-5000.0</span>, <span style="color:blue;">-500.0</span>, <span style="color:blue;">5000.0</span>, <span style="color:blue;">1020.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">-500.0</span>, <span style="color:blue;">1316.0</span>, <span style="color:blue;">40.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">1316.0</span>, <span style="color:blue;">-792.0</span>, <span style="color:blue;">321.0</span>, <span style="color:blue;">332.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">1200.0</span>, <span style="color:blue;">-165.0</span>, <span style="color:blue;">382.0</span>, <span style="color:blue;">254.0</span>, "rgb(<span style="color:orange;">64</span>, <span style="color:orange;">0</span>, <span style="color:orange;">64</span>)", "platform"),
+                    new Platform(<span style="color:blue;">900.0</span>, <span style="color:blue;">-300.0</span>, <span style="color:blue;">700.0</span>, <span style="color:blue;">820.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                    new Platform(<span style="color:blue;">1631.0</span>, <span style="color:blue;">-411.0</span>, <span style="color:blue;">611.0</span>, <span style="color:blue;">459.0</span>, "rgb(<span style="color:orange;">242</span>, <span style="color:orange;">30</span>, <span style="color:orange;">46</span>)", "platform"),
+</pre>
+                <p class="wikiText">Correct formatting means having a comma after each value with a space, before the comman or not having one after it will affect reading the csv.</p>
+
+                <p class="wikiText">Your Platform class will need to be altered too. It should have an arguement for tag after color. Your class should look like this:</p>
+                <pre class="wikiText">
+                    <span style="color:blue;">class</span> Platform <span style="color:blue;">extends</span> GameObject {
+                        <span style="color:blue;">constructor</span>(x, y, width, height, color = 'gray', tag = "platform") {
+                          <span style="color:blue;">super</span>(x, y);
+                          
+                          this.<span style="color:green;">addComponent</span>(<span style="color:purple;">new</span> Renderer(color, width, height));
+                          
+                          this.<span style="color:green;">addComponent</span>(<span style="color:purple;">new</span> Physics({ x: 0, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 0 });
+                          
+                          this.tag = tag; 
+                        }
+                      }
+                      
+                </pre>
+
+                <p class="wikiText">With this you should be done and ready to use the editor! :D</p>
+			</div>
+			<div class="extraContentTop">
+				<h1 id="Title" class="TopicHeadText">Csv File Format</h1>
+				<img class="coolImageInTopic" src="images/csv.png" alt="Correct Format">
+				<h1 id="Title" class="TopicHeadText">Platform Class</h1>
+				<img class="coolImageInTopic" src="images/newPlatform.png" alt="New Platform Info">
+			</div>
+			<div class="mainContent">
+                <h1 id="Title" class="TopicHeadText">Navigation</h1>
+				<p class="wikiText">To navigate around your level, you can use WASD, or the scroll wheel. Holding shift with the scroll wheel will move horizontal, while not holding it will be vertical. Holding left control will increase the speed of scroll, and holding right shift will so it down, so that every scroll is one unit.</p>
+			</div>
+			<div class="mainContent">
+                <h1 id="Title" class="TopicHeadText">Editing Blocks</h1>
+				<p class="wikiText">The current selected block will have a flashing outline around it, and it's info will be shown in the top left. Clicking this will bring you to the block. Clicking and dragging will move that block. Holding control whilst dragging will resize the box based on mouse position. Holding shift will keep it as a square.</p>
+                <p class="wikiText">Dragging with middle click will change the width of the block, and holding shift will change the height only.</p>
+                <p class="wikiText">Right clicking and holding will allow you to individually edit attributes of a block. Pressing the key at the top of the box will bring up a pop up that will let you input a value. Pressing cancel will keep the attribute unchanged. This is the only place you can change colour and tag. (Keep in mind that tag will do nothing unless specifically coded for in your game!)</p>
+                <p class="wikiText">Mistakes can be fixed by pressing control and z.</p>
+                <p class="wikiText">If a block is hidden behind another, press control and r to flip the drawing order of blocks.</p>
+            </div>
+			<div class="mainContentBottomLeft">
+                <h1 id="Title" class="TopicHeadText">Saving</h1>
+				<p class="wikiText">To save hit control and S, which should show a log onscreen with all the blocks saved. After this happens, open "level.csv" and copy the contents into the platforms array in "level.js".</p>
+                <pre class="wikiText">
+                    const platforms = [
+                        new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">-460.0</span>, <span style="color:blue;">689.0</span>, <span style="color:blue;">367.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">0.0</span>, <span style="color:blue;">900.0</span>, <span style="color:blue;">500.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">-5000.0</span>, <span style="color:blue;">-500.0</span>, <span style="color:blue;">5000.0</span>, <span style="color:blue;">1020.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">900.0</span>, <span style="color:blue;">-300.0</span>, <span style="color:blue;">700.0</span>, <span style="color:blue;">820.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">0.0</span>, <span style="color:blue;">-500.0</span>, <span style="color:blue;">1316.0</span>, <span style="color:blue;">40.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">1316.0</span>, <span style="color:blue;">-792.0</span>, <span style="color:blue;">321.0</span>, <span style="color:blue;">332.0</span>, "rgb(<span style="color:orange;">255</span>, <span style="color:orange;">0</span>, <span style="color:orange;">255</span>)", "platform"),
+                        new Platform(<span style="color:blue;">712</span>, <span style="color:blue;">-357</span>, <span style="color:blue;">100.0</span>, <span style="color:blue;">100.0</span>, "rgb(<span style="color:orange;">64</span>, <span style="color:orange;">0</span>, <span style="color:orange;">64</span>)", "platform"),
+                    ];
+                </pre>
+            </div>
+			<div class="extraContentBottomRight">
+                <h1 id="Title" class="TopicHeadText">Saving</h1>
+				<img class="coolImageInTopic" src="images/array.png" alt="Platforms Array">
+			</div>
+		</div>
+	</body>
+</html>

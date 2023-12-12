@@ -51,6 +51,7 @@ class Player extends GameObject {
     this.isGamepadMovement = false;
     this.isGamepadJump = false;
 
+    this.canFlip = true;
 
     this.dashSpeed = 20;
 
@@ -102,11 +103,6 @@ class Player extends GameObject {
       this.waitTimer = 0;
     }
 
-    
-    // if (input.isKeyDown('ControlLeft')) {
-    //   physics.velocity.x -= this.dashSpeed*this.direction;
-    // } 
-
     //coyote time implememntation
     if(physics.isGrounded){
       this.cTime = 0.35;
@@ -143,7 +139,11 @@ class Player extends GameObject {
       }
     }
 
-  
+    for(const obj of physics.collidedObjects){
+      if(obj.tag=="spike"){
+        this.resetGame();
+      }
+    }
   
     // Check if player has fallen off the bottom of the screen
     if (this.y > 0) {

@@ -1,10 +1,10 @@
 import cx_Freeze
 
-executables = [cx_Freeze.Executable("main.py", icon="icon.ico", base = "Win32GUI")]
+executables = [cx_Freeze.Executable("levelEditor.py", icon="icon.ico", base = "Win32GUI")]
 
-includedFiles=["player.png", "icon.png", "logo/", "floor/", "levels/", "ui/", "sound/", "npcs/", "font.ttf"]
+includedFiles=["help/", "icon.png", "level.csv", "getInput.py", "editInt.png", "icon.ico"]
 
-packages=["os", "pygame", "asyncio"]
+packages=["pygame", "os", "csv", "copy", "webbrowser"]
 
 cx_Freeze.setup(
     name="UNANIMATED WOMAN'S ENDING SIMULATOR",

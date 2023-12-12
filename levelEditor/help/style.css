@@ -1,0 +1,395 @@
+/* Reset default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Set font family and size */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Style header */
+  header {
+      background-color: #E0115F;
+      color: #fff;
+      padding: 20px;
+      text-align: left;
+      border-bottom: solid #7C072A 6px;
+      border-right: solid #7C072A 6px;
+      margin-right: 250px 6px;
+  }
+  
+  header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Style navigation menu */
+  nav {
+    background-color: #f2f2f2;
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav li {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  
+  nav a {
+    color: #E0115F;
+    text-decoration: none;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style main content */
+  main {
+      padding: 20px;
+  }
+  
+  section {
+      padding:40px;
+      border-top: dotted #E0115F 6px;
+  }
+  section#top {
+      border-top: dotted #E0115F 0px;
+  }
+  
+  section h2 {
+      color: #E0115F;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+  section h3 {
+      color: #7C072A;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      float: right;
+  }
+  
+  section p {
+    line-height: 1.5;
+      margin-bottom: 10px;
+  }
+  
+  /* Style footer */
+  footer {
+      background-color: #E0115F;
+      color: #fff;
+      padding: 30px;
+      text-align: center;
+      background-image: url("https://media.discordapp.net/attachments/1027649423246901309/1080471162368294942/image0.jpg?width=1441&height=334");
+      border-top: solid #7C072A 6px;
+  }
+  
+  .srcText{
+      color: blue;
+  }
+  
+  .LogoBox {
+      color: #FFFFFF;
+  }
+  .LogoBox:visited {
+      color: #FFFFFF;
+  }
+  
+  .coolImageMid {
+      border: solid #7C072A 6px;
+      border-left-width: 3px;
+      border-right-width: 3px;
+  }
+  .coolImageLeft {
+      border: solid #7C072A 6px;
+      border-right-width: 3px;
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+      background-color: white;
+  }
+  .coolImageRight {
+      border: solid #7C072A 6px;
+      border-left-width: 3px;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+      background-color: white;
+  }
+  .coolImageSolo {
+      max-width: 100%;
+      max-height: 100%;
+      border: solid #7C072A 6px;
+      border-radius: 25px;
+      background-color: white;
+  }
+  
+  .coolImageInTopic {
+      max-width: 100%;
+      max-height: 100%;
+      border: solid #7C072A 6px;
+      border-radius: 25px;
+      background-color: white;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  
+  .topicPreviewTitle{
+      width: 75%;
+  }
+  .topicPreviewTitleDate{
+      width: 100%;
+      white-space: nowrap;
+      overflow-x: auto;
+  }
+  .topicPreviewImage{
+      height: 100px;
+      border: solid #7C072A 3px;
+      border-radius: 25px;
+      float: right;
+      position: relative;
+      bottom: 15px;
+      right: -5px;
+  }
+  .NewTopic{
+      width: 50%;
+      border: solid #E0115F 6px;
+      padding: 10px;
+      border-top-left-radius: 25px;
+      border-right-width: 3px;
+      border-bottom-width: 3px;
+  }
+  .FavTopic{
+      width: 50%;
+      border: solid #E0115F 6px;
+      padding: 10px;
+      border-top-right-radius: 25px;
+      border-left-width: 3px;
+      border-bottom-width: 3px;
+  }
+  .AllTopic{
+      width: 100%;
+      border: solid #E0115F 6px;
+      padding: 10px;
+      border-bottom-right-radius: 25px;
+      border-bottom-left-radius: 25px;
+      border-top-width: 3px;
+  }
+  
+  .topicDiv {
+      border-top: soild #E0115F 6px;
+      border-bottom: dotted #E0115F 6px;
+  }
+  
+  .TopicHeadText{
+      color: #7C072A;
+      text-align: center;
+  }
+  
+  
+  .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+  }
+  
+  .mainContentTopLeft {
+      padding: 20px;
+      width:75%;
+      border: solid #E0115F 6px;
+      border-bottom-width: 3px;
+      border-right-width: 3px;
+      border-top-left-radius: 25px;
+      padding: 10px;
+  }
+  .mainContentTop {
+      padding: 20px;
+      width:100%;
+      border: solid #E0115F 6px;
+      border-bottom-width: 3px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      padding: 10px;
+  }
+  .mainContentBottom {
+      padding: 20px;
+      width:100%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+      padding: 10px;
+  }
+  .mainContent {
+      padding: 20px;
+      width:100%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+      padding: 10px;
+  }
+  .mainContentNoBottom {
+      padding: 20px;
+      width:100%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 0px;
+      padding: 10px;
+  }
+  .mainContentLeft {
+      padding: 20px;
+      width:75%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+      border-right-width: 3px;
+      padding: 10px;
+  }
+  .mainContentBottomLeft {
+      padding: 20px;
+      width:75%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-right-width: 3px;
+      padding: 10px;
+      border-bottom-left-radius: 25px;
+  }
+  .mainContentLeftNoTop {
+      padding: 20px;
+      width:75%;
+      border: solid #E0115F 6px;
+      border-top-width: 0px;
+      border-bottom-width: 3px;
+      border-right-width: 0px;
+      padding: 10px;
+  }
+  .mainContentRight {
+      padding: 20px;
+      width:75%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+      border-left-width: 3px;
+      padding: 10px;
+  }
+  
+  .extraContentLeft {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+      border-right-width: 3px;
+      padding: 10px;
+      background-color:#FFD4DE;
+  }
+  .extraContentLeftWithTop {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-top-width: 6px;
+      border-bottom-width: 3px;
+      border-right-width: 6px;
+      padding: 10px;
+      background-color:#FFD4DE;
+      border-top-right-radius: 25px;
+  }
+  .extraContentRight {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+      border-left-width: 3px;
+      padding: 10px;
+      background-color:#FFD4DE;
+  }
+  .extraContentBottomRight {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-top-width: 3px;
+      border-left-width: 3px;
+      padding: 10px;
+      background-color:#FFD4DE;
+      border-bottom-right-radius: 25px;
+  }
+  .extraContentRightWithTop {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-top-width: 6px;
+      border-bottom-width: 3px;
+      padding: 10px;
+      background-color:#FFD4DE;
+      border-top-left-radius: 25px;
+  }
+  .extraContentTop {
+      padding: 20px;
+      width:25%;
+      border: solid #E0115F 6px;
+      border-bottom-width: 3px;
+      border-left-width: 3px;
+      border-top-right-radius: 25px;
+      padding: 10px;
+      background-color:#FFD4DE;
+  }
+  
+  .sidebar {
+      flex: 1;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 250px;
+      background-color: #FFD4DE;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      border-left: solid #7C072A 6px;
+      border-top: solid #7C072A 6px;
+      border-bottom: solid #7C072A 6px;
+  }
+  .sidebar a {
+      display: block;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      color: blue;
+      text-decoration: none;
+  }
+  
+  .goToPage {
+      background-color: #E0115F;
+      color: white;
+      border: solid #E0115F 3px;
+      padding: 3px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+  }
+  .goToPage:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  
+  .wikiText {
+      padding-bottom:20px;
+  }
+  .imageText {
+      padding-bottom:10px;
+      padding-top:10px;
+  }

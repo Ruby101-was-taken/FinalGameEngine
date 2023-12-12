@@ -17,10 +17,12 @@ class Physics extends Component {
 
     this.width = null;
     this.height = null;
+
+    this.collidedObjects = [];
   }
  
   // The update method handles how the component's state changes over time.
-  update(deltaTime, print=false) {
+  update(deltaTime) {
     // Update velocity based on acceleration and gravity.
     this.velocity.x += this.acceleration.x * deltaTime;
     this.velocity.y += (this.acceleration.y + this.gravity.y) * deltaTime;
@@ -28,13 +30,14 @@ class Physics extends Component {
     // Move the game object based on the velocity.
     
     const solidObjs = this.gameObject.game.gameObjects.filter((obj) => obj.hasComponent(Physics) && obj.getComponent(Physics).isSolid); //find solid objects first,
-
+    this.collidedObjects = [];
 
     this.isGrounded = false;
     for(let i=0; i<Math.abs(this.velocity.y); i++){
       this.gameObject.y+=Math.sign(this.velocity.y);
       for(const obj of solidObjs){
         if(obj.getComponent(Physics).isColliding(this)){
+          this.collidedObjects.push(obj);
           if(this.gravity.y>=0){
             if(this.velocity.y<0){
               this.gameObject.y+=1;
@@ -67,6 +70,7 @@ class Physics extends Component {
       //this.gameObject.y--;
       for(const obj of solidObjs){
            if(obj.getComponent(Physics).isColliding(this)){
+            this.collidedObjects.push(obj);
             this.gameObject.x-=Math.sign(this.velocity.x);
             this.velocity.x = 0;
            }
