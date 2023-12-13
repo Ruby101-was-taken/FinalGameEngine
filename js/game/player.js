@@ -12,7 +12,7 @@ import { PlayerImages, AudioFiles } from '../engine/resources.js';
 import GameAnimation from '../engine/animation.js';
 import GameSoundPlayer from '../engine/sound.js';
 import PlayerIdle from './playerIdle.js';
-
+import Star from './star.js';
 
 
 // Defining a class Player that extends GameObject
@@ -94,13 +94,17 @@ class Player extends GameObject {
     if(this.ctrlHeld){
       this.ctrlHeld = input.isKeyDown("ControlLeft");
     }
+    if(!this.canFlip){
+      this.canFlip = physics.isGrounded;
+    }
 
-    if(input.isKeyDown('ControlLeft') && !this.ctrlHeld){
+    if(input.isKeyDown('ControlLeft') && !this.ctrlHeld && this.canFlip){
       this.ctrlHeld = true;
       physics.gravity.y *= -1;
       this.directionY *= -1;
       this.idleAnim.directionY = this.directionY;
       this.waitTimer = 0;
+      this.canFlip = false;
     }
 
     //coyote time implememntation
@@ -131,24 +135,20 @@ class Player extends GameObject {
     }
 
     // Handle collisions with collectibles
-    const collectibles = this.game.gameObjects.filter((obj) => obj instanceof Collectible);
-    for (const collectible of collectibles) {
-      if (physics.isColliding(collectible.getComponent(Physics))) {
-        this.collect(collectible);
-        this.game.removeGameObject(collectible);
+    const stars = this.game.gameObjects.filter((obj) => obj instanceof Star);
+    for (const star of stars) {
+      if (physics.isColliding(star.getComponent(Physics))) {
+        this.game.gameManager.getStar(star);
       }
     }
 
     for(const obj of physics.collidedObjects){
-      if(obj.tag=="spike"){
+      if(obj.tag=="bad"){
         this.resetGame();
       }
     }
   
-    // Check if player has fallen off the bottom of the screen
-    if (this.y > 0) {
-      this.resetPlayerState();
-    }
+    
 
     // // Check if player has no lives left
     // if (this.lives <= 0) {
@@ -203,6 +203,17 @@ class Player extends GameObject {
     super.update(deltaTime);
   }
 
+  draw(ctx){
+    const renderer = this.getComponent(Renderer);
+    if(!this.canFlip){
+        renderer.addEffect("saturate", 30)
+    }
+    else{
+      renderer.addEffect("saturate", 100)
+    }
+    super.draw(ctx);
+  }
+
   startJump() {
     // Initiate a jump if the player is on a platfor
     if (this.getComponent(Physics).isGrounded || this.cTime>0) {
@@ -254,10 +265,15 @@ class Player extends GameObject {
     this.y = -70;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };
     this.getComponent(Physics).acceleration = { x: 0, y: 0 };
+    this.getComponent(Physics).gravity = { x: 0, y: Math.abs(this.getComponent(Physics).gravity.y) };
     this.direction = -1;
     this.isOnPlatform = false;
     this.isJumping = false;
     this.jumpTimer = 0;
+    this.direction = 1;
+    this.directionY = 1;
+    this.idleAnim.directionY = 1;
+    this.game.reset();
   }
 
   resetGame() {

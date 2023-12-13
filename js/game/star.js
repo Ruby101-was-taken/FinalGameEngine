@@ -8,7 +8,7 @@ import Renderer from '../engine/renderer.js';
 import Physics from '../engine/physics.js';
 
 // Define a new class, Collectible, which extends (i.e., inherits from) GameObject
-class Collectible extends GameObject {
+class Star extends GameObject {
   
   // Define the constructor for this class. The constructor takes five arguments:
   // - x and y coordinates
@@ -34,8 +34,26 @@ class Collectible extends GameObject {
 
     // Set the 'value' property of this collectible. This could be used to score points when the collectible is collected.
     this.value = 1;
+
+    this.collected = false
+  }
+
+  reset(){
+    this.collected = false;
+  }
+
+  draw(ctx){
+    if(!this.collected){
+        super.draw(ctx);
+    }
+  }
+
+  emitCollectParticles() {
+    // Create a particle system at the player's position when a collectible is collected
+    const particleSystem = new ParticleSystem(this.x, this.y, 'yellow', 20, 1, 0.5);
+    this.game.addGameObject(particleSystem);
   }
 }
 
 // Export the Collectible class as the default export of this module
-export default Collectible;
+export default Star;

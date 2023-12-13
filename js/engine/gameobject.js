@@ -47,6 +47,10 @@ class GameObject {
     hasComponent(componentClass){ 
       return this.getComponent(componentClass) != undefined; //return whether a game object holds a specific component 
     }
+
+    reset(){
+      
+    }
   }
   
   // The GameObject class is exported as the default export of this module.
