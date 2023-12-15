@@ -24,11 +24,11 @@ class Physics extends Component {
   // The update method handles how the component's state changes over time.
   update(deltaTime) {
     // Update velocity based on acceleration and gravity.
-    this.velocity.x += this.acceleration.x * deltaTime;
-    this.velocity.y += (this.acceleration.y + this.gravity.y) * deltaTime;
+    this.velocity.x += this.acceleration.x* deltaTime;
+    this.velocity.y += (this.acceleration.y + this.gravity.y)* deltaTime;
 
     // Move the game object based on the velocity.
-    
+    //                this.gameObject.game.gameObjects is a beautiful line of code 
     const solidObjs = this.gameObject.game.gameObjects.filter((obj) => obj.hasComponent(Physics) && obj.getComponent(Physics).isSolid); //find solid objects first,
     this.collidedObjects = [];
 

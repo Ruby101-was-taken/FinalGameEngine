@@ -13,15 +13,12 @@ class Particle extends GameObject {
     this.duration = duration;
     // Add a Renderer component to this particle. The Renderer is responsible for drawing the particle.
     this.addComponent(new Renderer(color, width, height));
-    // Add a Physics component to this particle. The Physics component is responsible for the physics of the particle.
-    this.addComponent(new Physics({ x: 0, y: 0 }, { x: 0, y: 0 }));
   }
 
   // The update method is called once per game frame and is responsible for updating the state of the particle.
   update(deltaTime) {
     // Decrease the duration by the amount of time that has passed since the last frame.
     this.duration -= deltaTime;
-
     // If the duration has run out...
     if (this.duration <= 0) {
       // Remove this particle from the game.

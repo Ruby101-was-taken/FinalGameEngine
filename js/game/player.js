@@ -13,6 +13,7 @@ import GameAnimation from '../engine/animation.js';
 import GameSoundPlayer from '../engine/sound.js';
 import PlayerIdle from './playerIdle.js';
 import Star from './star.js';
+import Speed from './speed.js';
 
 
 // Defining a class Player that extends GameObject
@@ -42,7 +43,7 @@ class Player extends GameObject {
     this.directionY = 1;
     this.lives = 3;
     this.score = 0;
-    this.isOnPlatform = false;
+    this.wasGrounded = true;
     this.isJumping = false;
     this.jumpForce = 20;
     this.jumpTime = 0.3;
@@ -64,6 +65,9 @@ class Player extends GameObject {
     this.waitTimer = 0;
     this.idleAnim = new PlayerIdle(this);
     this.addedIdleAnim = false;
+
+    this.defaultSpeed = 15;
+    this.speed = this.defaultSpeed;
   }
 
   // The update function runs every frame and contains game logic
@@ -81,11 +85,11 @@ class Player extends GameObject {
     
     // Handle player movement
     if (!this.isGamepadMovement && (input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD')) && physics.velocity.x<5 && !(input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA'))) {
-      physics.acceleration.x = 15;
+      physics.acceleration.x = this.speed;
       this.direction = -1;
       this.waitTimer = 0;
     } if (!this.isGamepadMovement && (input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA')) && physics.velocity.x>-5 && !(input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD'))) {
-      physics.acceleration.x = -15;
+      physics.acceleration.x = -this.speed;
       this.direction = 1;
       this.waitTimer = 0;
     }  
@@ -100,14 +104,10 @@ class Player extends GameObject {
 
     if(input.isKeyDown('ControlLeft') && !this.ctrlHeld && this.canFlip){
       this.ctrlHeld = true;
-      physics.gravity.y *= -1;
-      this.directionY *= -1;
-      this.idleAnim.directionY = this.directionY;
-      this.waitTimer = 0;
-      this.canFlip = false;
+      this.gravFlip();
     }
 
-    //coyote time implememntation
+    //coyote time implementation
     if(physics.isGrounded){
       this.cTime = 0.35;
     }
@@ -141,10 +141,21 @@ class Player extends GameObject {
         this.game.gameManager.getStar(star);
       }
     }
+    // Handle collisions with speed power ups
+    const speedPU = this.game.gameObjects.filter((obj) => obj instanceof Speed);
+    for (const speed of speedPU) {
+      if (physics.isColliding(speed.getComponent(Physics))) {
+        speed.get(this);
+        
+      }
+    }
 
     for(const obj of physics.collidedObjects){
       if(obj.tag=="bad"){
         this.resetGame();
+      }
+      if(obj.tag=="flipper" && physics.isGrounded){
+        this.gravFlip();
       }
     }
   
@@ -200,8 +211,19 @@ class Player extends GameObject {
         anim.currentAnimation = 3;
       }
     }
+
+    this.wasGrounded = physics.isGrounded;
+
     super.update(deltaTime);
+
+    if(physics.isGrounded && !this.wasGrounded){
+      this.groundParticles();
+    }
   }
+
+  groundParticles(){
+    this.game.gameManager.spawnParticles({x:this.x, y:this.y+23, w:this.w, h:0}, "white", new Physics({x:0,y:-Math.sign(this.getComponent(Physics).gravity.y)/1000}, {x:0,y:0}, {x:0,y:0}, {x:0,y:0}), 1, 0.5);
+  } 
 
   draw(ctx){
     const renderer = this.getComponent(Renderer);
@@ -214,9 +236,22 @@ class Player extends GameObject {
     super.draw(ctx);
   }
 
+  changeSpeed(by){
+    this.speed+=by;
+  }
+
+  gravFlip(){
+    this.getComponent(Physics).gravity.y *= -1;
+    this.directionY *= -1;
+    this.idleAnim.directionY = this.directionY;
+    this.waitTimer = 0;
+    this.canFlip = false;
+  }
+
   startJump() {
     // Initiate a jump if the player is on a platfor
     if (this.getComponent(Physics).isGrounded || this.cTime>0) {
+      this.groundParticles();
       this.getComponent(GameSoundPlayer).playSound("Jump");
       this.isJumping = true;
       this.jumpTimer = this.jumpTime;
@@ -250,14 +285,9 @@ class Player extends GameObject {
     // Handle collectible pickup
     this.score += collectible.value;
     console.log(`Score: ${this.score}`);
-    this.emitCollectParticles(collectible);
+    this.game.gameManager.emitParticles(collectible);
   }
 
-  emitCollectParticles() {
-    // Create a particle system at the player's position when a collectible is collected
-    const particleSystem = new ParticleSystem(this.x, this.y, 'yellow', 20, 1, 0.5);
-    this.game.addGameObject(particleSystem);
-  }
 
   resetPlayerState() {
     // Reset the player's state, repositioning it and nullifying movement
@@ -273,6 +303,7 @@ class Player extends GameObject {
     this.direction = 1;
     this.directionY = 1;
     this.idleAnim.directionY = 1;
+    this.speed = this.defaultSpeed;
     this.game.reset();
   }
 
@@ -282,6 +313,8 @@ class Player extends GameObject {
     this.score = 0;
     this.resetPlayerState();
   }
+
+  
 }
 
 export default Player;

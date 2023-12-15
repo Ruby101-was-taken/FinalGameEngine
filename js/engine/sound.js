@@ -11,7 +11,7 @@ class GameSoundPlayer extends Component{
         this.sound[name] = path;
     }
     playSound(name){
-        this.sound[name].play();
+       new Audio(this.sound[name].src).play();
     }
 }
 

@@ -1,3 +1,5 @@
+import Renderer from "./renderer.js";
+
 // This class represents a GameObject which is an entity in your game.
 class GameObject {
     // The constructor initializes a new instance of the GameObject class.
@@ -10,6 +12,10 @@ class GameObject {
       this.y = y;
       // An array to hold all the components that are attached to this GameObject.
       this.components = [];
+
+      //adds default width and height
+      this.w = 0;
+      this.h = 0;
     }
   
     // The addComponent method is used to attach a new component to this GameObject.
@@ -26,6 +32,11 @@ class GameObject {
     update(deltaTime) {
       for (const component of this.components) {
         component.update(deltaTime);
+      }
+
+      if(this.hasComponent(Renderer)){
+        this.w=this.getComponent(Renderer).width;
+        this.h=this.getComponent(Renderer).height;
       }
     }
   

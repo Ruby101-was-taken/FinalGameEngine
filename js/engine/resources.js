@@ -19,11 +19,21 @@ const PlayerImages = {
   wait4: new Image(),
 }
 
+const SpeedImages = {
+  f1: new Image(),
+  f2: new Image(),
+  f3: new Image(),
+  f4: new Image(),
+}
 
+SpeedImages.f1.src = "./resources/images/powerUp/speed/speed1.png"
+SpeedImages.f2.src = "./resources/images/powerUp/speed/speed2.png"
+SpeedImages.f3.src = "./resources/images/powerUp/speed/speed3.png"
+SpeedImages.f4.src = "./resources/images/powerUp/speed/speed4.png"
 
 // Create an AudioFiles object to hold the file paths of the audio resources.
 const AudioFiles = {
-  jump: new Audio('./resources/audio/jump.mp3'), // The file path of the jump sound.
+  jump: new Audio('./resources/audio/jump.wav'), // The file path of the jump sound.
   // Add more audio file paths as needed
 };
 
@@ -45,4 +55,4 @@ PlayerImages.wait4.src = './resources/images/player/wait4.png';
 Images.enemy.src = './resources/images/enemy/enemy.png'; // Update the image path
 
 // Export the Images and AudioFiles objects so they can be imported and used in other modules.
-export { Images, AudioFiles, PlayerImages };
+export { Images, AudioFiles, PlayerImages, SpeedImages };
