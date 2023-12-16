@@ -34,6 +34,7 @@ class Player extends GameObject {
     this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.jump]));
     this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.fall]));
     this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait1, PlayerImages.wait4]));
+    this.getComponent(GameAnimationHandler).addAnimation(new GameAnimation([PlayerImages.teeter1, PlayerImages.teeter2]));
 
     this.addComponent(new GameSoundPlayer());
     this.getComponent(GameSoundPlayer).addSound("Jump", AudioFiles.jump);
@@ -184,7 +185,16 @@ class Player extends GameObject {
       }
       else{
         anim.bonusNum = 0;
-        if(this.waitTimer < 5){
+        this.groundCheck = new GameObject(this.x+23, (this.y+23)+(23 * Math.sign(physics.gravity.y)));
+        this.game.addGameObject(this.groundCheck);
+        this.groundCheck.addComponent(new Physics({x:0,y:1},{x:0,y:0},{x:0,y:0},{x:0,y:0}));
+        this.groundCheck.addComponent(new Renderer("white",1, 1));
+        this.groundCheck.getComponent(Physics).update(deltaTime);
+        
+        if(this.groundCheck.getComponent(Physics).collidedObjects.length==0){
+          anim.currentAnimation = 6;
+        }
+        else if(this.waitTimer < 5){
           anim.currentAnimation = 0;
         }
         else {
@@ -193,6 +203,9 @@ class Player extends GameObject {
           this.idleAnim.getComponent(Renderer).show = true;
           anim.currentAnimation = 5;
         }
+        
+      this.game.removeGameObject(this.groundCheck);
+
       }
     }
     else if(physics.velocity.y<0){

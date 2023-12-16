@@ -17,6 +17,8 @@ const PlayerImages = {
   wait2: new Image(),
   wait3: new Image(),
   wait4: new Image(),
+  teeter1: new Image(),
+  teeter2: new Image(),
 }
 
 const SpeedImages = {
@@ -50,6 +52,8 @@ PlayerImages.wait1.src = './resources/images/player/wait1.png';
 PlayerImages.wait2.src = './resources/images/player/wait2.png';
 PlayerImages.wait3.src = './resources/images/player/wait3.png';
 PlayerImages.wait4.src = './resources/images/player/wait4.png';
+PlayerImages.teeter1.src = './resources/images/player/teeter1.png';
+PlayerImages.teeter2.src = './resources/images/player/teeter2.png';
 
 // Set the source of the enemy image.
 Images.enemy.src = './resources/images/enemy/enemy.png'; // Update the image path
