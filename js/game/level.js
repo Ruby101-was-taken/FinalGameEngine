@@ -178,14 +178,15 @@ class Level extends Game {
     this.addGameObject(this.gameManager);
 
     // Create a player object and add it to the game
-    const player = new Player(0, -70);
-    this.addGameObject(player);
+    this.player = new Player(0, -70);
+    this.addGameObject(this.player);
     // Set the game's camera target to the player
-    this.camera.target = player;
+    this.camera.target = this.player;
 
     
     // Add the player UI object to the game
-    this.addGameObject(new PlayerUI(10, 10));
+    this.playerUI = new PlayerUI(10, 10);
+    this.addGameObject(this.playerUI);
 
 
     setTimeout (() => {this.addGameObject(new MusicPlayer()); console.log("help");}, 1000)

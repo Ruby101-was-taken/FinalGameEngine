@@ -73,6 +73,8 @@ class Player extends GameObject {
 
     this.defaultSpeed = 15;
     this.speed = this.defaultSpeed;
+
+    this.canMove = true;
   }
 
   // The update function runs every frame and contains game logic
@@ -89,59 +91,61 @@ class Player extends GameObject {
     this.waitTimer+=deltaTime;
     
     // Handle player movement
-    if (!this.isGamepadMovement && (input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD')) && physics.velocity.x<5 && !(input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA'))) {
-      physics.acceleration.x = this.speed;
-      this.direction = -1;
-      this.waitTimer = 0;
-    } if (!this.isGamepadMovement && (input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA')) && physics.velocity.x>-5 && !(input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD'))) {
-      physics.acceleration.x = -this.speed;
-      this.direction = 1;
-      this.waitTimer = 0;
-    }  
-
-    //console.log(physics.acceleration);
-
+    if(this.canMove){
+      if (!this.isGamepadMovement && (input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD')) && physics.velocity.x<5 && !(input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA'))) {
+        physics.acceleration.x = this.speed;
+        this.direction = -1;
+        this.waitTimer = 0;
+      } if (!this.isGamepadMovement && (input.isKeyDown('ArrowLeft') || input.isKeyDown('KeyA')) && physics.velocity.x>-5 && !(input.isKeyDown('ArrowRight') || input.isKeyDown('KeyD'))) {
+        physics.acceleration.x = -this.speed;
+        this.direction = 1;
+        this.waitTimer = 0;
+      }  
     
 
+      //console.log(physics.acceleration);
 
-    if(this.ctrlHeld){
-      this.ctrlHeld = input.isKeyDown("ControlLeft");
-    }
-    if(!this.canFlip){
-      this.canFlip = physics.isGrounded;
-    }
-
-    if(input.isKeyDown('ControlLeft') && !this.ctrlHeld && this.canFlip){
-      this.ctrlHeld = true;
-      this.gravFlip();
-      this.getComponent(GameSoundPlayer).playSound("Flip");
-    }
-
-    //coyote time implementation
-    if(physics.isGrounded){
-      this.cTime = 0.35;
-    }
-    else if(this.cTime > 0){
-      this.cTime-=deltaTime*2;
-    }
-    else if(this.cTime <0){
-      this.cTime = 0;
-    }
+      
 
 
-    if(this.jumpHeld){
-      this.jumpHeld = input.isKeyDown("Space");
-    }
+      if(this.ctrlHeld){
+        this.ctrlHeld = input.isKeyDown("ControlLeft");
+      }
+      if(!this.canFlip){
+        this.canFlip = physics.isGrounded;
+      }
 
-    // Handle player jumping
-    if (!this.isGamepadJump && input.isKeyDown('Space') && !this.jumpHeld) {
-      this.startJump();
-      this.jumpHeld = true;
-      this.waitTimer = 0;
-    }
+      if(input.isKeyDown('ControlLeft') && !this.ctrlHeld && this.canFlip){
+        this.ctrlHeld = true;
+        this.gravFlip();
+      }
 
-    if (this.isJumping) {
-      this.updateJump(deltaTime);
+      //coyote time implementation
+      if(physics.isGrounded){
+        this.cTime = 0.35;
+      }
+      else if(this.cTime > 0){
+        this.cTime-=deltaTime*2;
+      }
+      else if(this.cTime <0){
+        this.cTime = 0;
+      }
+
+
+      if(this.jumpHeld){
+        this.jumpHeld = input.isKeyDown("Space");
+      }
+
+      // Handle player jumping
+      if (!this.isGamepadJump && input.isKeyDown('Space') && !this.jumpHeld) {
+        this.startJump();
+        this.jumpHeld = true;
+        this.waitTimer = 0;
+      }
+
+      if (this.isJumping) {
+        this.updateJump(deltaTime);
+      }
     }
 
     // Handle collisions with collectibles
@@ -156,7 +160,6 @@ class Player extends GameObject {
     for (const speed of speedPU) {
       if (physics.isColliding(speed.getComponent(Physics))) {
         speed.get(this);
-        
       }
     }
 
@@ -203,7 +206,7 @@ class Player extends GameObject {
         if(this.groundCheck.getComponent(Physics).collidedObjects.length==0){
           anim.currentAnimation = 6;
         }
-        else if(this.waitTimer < 5){
+        else if(this.waitTimer < 5 || !this.canMove){
           anim.currentAnimation = 0;
         }
         else {
@@ -264,6 +267,7 @@ class Player extends GameObject {
   }
 
   gravFlip(){
+    this.getComponent(GameSoundPlayer).playSound("Flip");
     this.getComponent(Physics).gravity.y *= -1;
     this.directionY *= -1;
     this.idleAnim.directionY = this.directionY;

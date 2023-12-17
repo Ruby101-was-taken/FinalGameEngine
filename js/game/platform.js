@@ -32,6 +32,10 @@ class Platform extends GameObject {
       this.addComponent(new GameAnimationHandler(TerrainTextures.lava1));
       this.getComponent(GameAnimationHandler).animations[0] = new GameAnimation([TerrainTextures.lava1, TerrainTextures.lava2, TerrainTextures.lava3], 10);
     }
+    else if(this.tag =="platform"){
+      if(width==100 && height == 100){this.getComponent(Renderer).image = TerrainTextures[`p1`]}
+      else{this.getComponent(Renderer).image = TerrainTextures[`p${new GeneralFunctions().genrateRandomNumber(2,8)}`]}
+    }
   }
 }
 
