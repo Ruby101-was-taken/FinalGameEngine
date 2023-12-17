@@ -2,6 +2,7 @@
 import GameObject from './gameobject.js';
 import Particle from './particle.js';
 import Physics from '../engine/physics.js';
+import GeneralFunctions from './generalFunctions.js';
 
 // The ParticleSystem class extends GameObject and is responsible for creating and managing a system of particles.
 class ParticleSystem extends GameObject {
@@ -17,6 +18,7 @@ class ParticleSystem extends GameObject {
     this.particlesEmitted = 0; // Keep track of how many particles have been emitted.
     this.physics = physics;
     this.power = power;
+    this.gf = new GeneralFunctions();
   }
 
   // The update method is called once per game frame and is responsible for updating the state of the particle system.
@@ -44,8 +46,8 @@ class ParticleSystem extends GameObject {
       // Create a new particle with a random life duration, size, and initial velocity.
       const lifeDuration = this.lifeDuration + Math.random() - 0.5;
       const particle = new Particle(this.x, this.y, 5, 5, this.color, lifeDuration);
-      console.log(Math.floor(Math.random() * (this.power + -this.power + 1) + -this.power));
-      particle.addComponent(new Physics({x:this.physics.velocity.x * Math.floor(Math.random() * (this.power + -this.power + 1) + -this.power), y:this.physics.velocity.y * Math.floor(Math.random() * (this.power + -this.power + 1) + -this.power)}, {x:this.physics.acceleration.x, y:this.physics.acceleration.y}, {x:this.physics.decceleration.x, y:this.physics.decceleration.y}, {x:this.physics.gravity.x, y:this.physics.gravity.y}));
+
+      particle.addComponent(new Physics({x:this.physics.velocity.x * this.gf.genrateRandomNumber(-this.power, this.power), y:this.physics.velocity.y * this.gf.genrateRandomNumber(-this.power, this.power)}, {x:this.physics.acceleration.x, y:this.physics.acceleration.y}, {x:this.physics.decceleration.x, y:this.physics.decceleration.y}, {x:this.physics.gravity.x, y:this.physics.gravity.y}));
       
       // Add the particle to the game.
       this.game.addGameObject(particle);

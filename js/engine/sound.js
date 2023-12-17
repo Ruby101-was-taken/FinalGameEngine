@@ -13,6 +13,9 @@ class GameSoundPlayer extends Component{
     playSound(name){
        new Audio(this.sound[name].src).play();
     }
+    playSoundUntilDone(name){  //only plays sound once until over, will not let sound overlap
+        this.sound[name].play();
+    }
 }
 
 export default GameSoundPlayer;

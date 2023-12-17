@@ -14,6 +14,7 @@ import GameSoundPlayer from '../engine/sound.js';
 import PlayerIdle from './playerIdle.js';
 import Star from './star.js';
 import Speed from './speed.js';
+import GeneralFunctions from '../engine/generalFunctions.js';
 
 
 // Defining a class Player that extends GameObject
@@ -38,6 +39,9 @@ class Player extends GameObject {
 
     this.addComponent(new GameSoundPlayer());
     this.getComponent(GameSoundPlayer).addSound("Jump", AudioFiles.jump);
+    this.getComponent(GameSoundPlayer).addSound("Land", AudioFiles.land);
+    this.getComponent(GameSoundPlayer).addSound("Hit", AudioFiles.hit);
+    this.getComponent(GameSoundPlayer).addSound("Flip", AudioFiles.flip);
     
     // Initialize all the player specific properties
     this.direction = -1;
@@ -95,6 +99,10 @@ class Player extends GameObject {
       this.waitTimer = 0;
     }  
 
+    //console.log(physics.acceleration);
+
+    
+
 
     if(this.ctrlHeld){
       this.ctrlHeld = input.isKeyDown("ControlLeft");
@@ -106,6 +114,7 @@ class Player extends GameObject {
     if(input.isKeyDown('ControlLeft') && !this.ctrlHeld && this.canFlip){
       this.ctrlHeld = true;
       this.gravFlip();
+      this.getComponent(GameSoundPlayer).playSound("Flip");
     }
 
     //coyote time implementation
@@ -231,6 +240,7 @@ class Player extends GameObject {
 
     if(physics.isGrounded && !this.wasGrounded){
       this.groundParticles();
+      this.getComponent(GameSoundPlayer).playSound("Land");
     }
   }
 
@@ -304,6 +314,7 @@ class Player extends GameObject {
 
   resetPlayerState() {
     // Reset the player's state, repositioning it and nullifying movement
+    this.getComponent(GameSoundPlayer).playSound("Hit");
     this.x = 0 ;
     this.y = -70;
     this.getComponent(Physics).velocity = { x: 0, y: 0 };

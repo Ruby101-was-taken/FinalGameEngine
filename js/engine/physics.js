@@ -1,5 +1,4 @@
 // Import the required modules and classes.
-import Collectible from '../game/collectible.js';
 import Component from './component.js';
 import Renderer from './renderer.js';
 

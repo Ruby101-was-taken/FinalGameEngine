@@ -2,6 +2,10 @@
 import GameObject from '../engine/gameobject.js';
 import Renderer from '../engine/renderer.js';
 import Physics from '../engine/physics.js';
+import { TerrainTextures } from '../engine/resources.js';
+import GeneralFunctions from '../engine/generalFunctions.js';
+import GameAnimationHandler from '../engine/animationHandler.js';
+import GameAnimation from '../engine/animation.js';
 
 // Define a new class, Platform, which extends (inherits from) GameObject
 class Platform extends GameObject {
@@ -23,6 +27,11 @@ class Platform extends GameObject {
     
     // Set the tag property to 'platform'. This can be used to identify platforms later in the game logic
     this.tag = tag; 
+
+    if(this.tag == "bad"){
+      this.addComponent(new GameAnimationHandler(TerrainTextures.lava1));
+      this.getComponent(GameAnimationHandler).animations[0] = new GameAnimation([TerrainTextures.lava1, TerrainTextures.lava2, TerrainTextures.lava3], 10);
+    }
   }
 }
 
